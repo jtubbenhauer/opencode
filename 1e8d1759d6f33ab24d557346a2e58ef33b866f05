@@ -1,0 +1,25 @@
+packages/opencode/src/cli/cmd/tui/context/sync.tsx
+  adf8cc742cf04442 113-118,443-449
+packages/opencode/test/server/pending-list.test.ts
+  adf8cc742cf04442 1-122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "1e8d1759d6f33ab24d557346a2e58ef33b866f05",
+  "prompts": {
+    "adf8cc742cf04442": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_29f13f9efffeI25mXNqgoyn1dp",
+        "model": "github-copilot/claude-opus-4.6"
+      },
+      "human_author": "Jack Tubbenhauer",
+      "messages": [],
+      "total_additions": 185,
+      "total_deletions": 50,
+      "accepted_lines": 135,
+      "overriden_lines": 0
+    }
+  }
+}
