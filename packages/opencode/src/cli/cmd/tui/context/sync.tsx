@@ -110,6 +110,12 @@ export const { use: useSync, provider: SyncProvider } = createSimpleContext({
 
     const sdk = useSDK()
 
+    function grouped<T extends { sessionID: string }>(items: T[]) {
+      const result: Record<string, T[]> = {}
+      for (const item of items) (result[item.sessionID] ??= []).push(item)
+      return result
+    }
+
     async function syncWorkspaces() {
       const result = await sdk.client.experimental.workspace.list().catch(() => undefined)
       if (!result?.data) return
@@ -434,6 +440,13 @@ export const { use: useSync, provider: SyncProvider } = createSimpleContext({
             sdk.client.provider.auth().then((x) => setStore("provider_auth", reconcile(x.data ?? {}))),
             sdk.client.vcs.get().then((x) => setStore("vcs", reconcile(x.data))),
             sdk.client.path.get().then((x) => setStore("path", reconcile(x.data!))),
+            sdk.client.permission.list().then((x) => {
+              for (const [id, reqs] of Object.entries(grouped(x.data ?? [])))
+                setStore("permission", id, reconcile(reqs))
+            }),
+            sdk.client.question.list().then((x) => {
+              for (const [id, reqs] of Object.entries(grouped(x.data ?? []))) setStore("question", id, reconcile(reqs))
+            }),
             syncWorkspaces(),
           ]).then(() => {
             setStore("status", "complete")
